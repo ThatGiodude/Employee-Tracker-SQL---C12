@@ -1,14 +1,7 @@
-const connection = require('./connection');
+const connection = require('./connection/connection');
 const inquirer = require("inquirer");
 const mysql = require("mysql");
 // set up connection to database
-db.connection(function (err) {
-    if (err) throw err;
-    console.log("******************************");
-    console.log("       EMPLOYEE TRACKER       ");
-    console.log("******************************");
-    startingQuestion();
-});
 
 function startingQuestion() {
     inquirer.questions([
@@ -35,7 +28,17 @@ function startingQuestion() {
             case 'Add New Employee':
                 addNewEmployee();
                 break;
-            case
-        }
-    })
-}
+            
+        };
+    });
+};
+
+
+connection.connect(err => {
+    if (err) {
+        console.error('Error connecting to the database:', err);
+        return;
+    }
+    console.log('Connected to the database.');
+    startApp();
+});
